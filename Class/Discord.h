@@ -5,18 +5,17 @@
 #include <string>
 #include <iostream>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
 
 const char* c_str();
+
+bool FileIsExist(std::string filePath);
 
 class Discord {
 public:
 	void Initialize(string publickey);
 	void SetupHacker();
 	void SetupDog();
-	void SetupCat();
-	void SetupCPP();
-	void SetupChips();
-	void SetupEzhik();
 };
