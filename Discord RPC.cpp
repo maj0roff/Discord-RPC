@@ -3,109 +3,173 @@
 
 Discord* g_Discord;
 
+void wronginput()
+{
+	cel::print("РќРµРІРµСЂРЅС‹Р№ РІРІРѕРґ", color_red);
+	Sleep(1500);
+	system("exit");
+}
+
+void logo(int color)
+{
+	cel::print("         _nnnn_", color);
+	cel::print("        dGGGGMMb", color);
+	cel::print("       @p~qp~~qMb", color);
+	cel::print("       M|@||@) M|", color);
+	cel::print("       @,----.JM|", color);
+	cel::print("      JS^\__/  qKL", color);
+	cel::print("     dZP        qKRb", color);
+	cel::print("    dZP          qKKb", color);
+	cel::print("   fZP            SMMb", color);
+	cel::print("   HZM            MMMM", color);
+	cel::print("   FqM            MMMM", color);
+	cel::print("   8D7____________JHE8", color);
+	cel::print("", color);
+	cel::print("      Discord RPC", color_white);
+	cel::print("     Author : maj0r", color_white);
+	cel::spacing();
+}
+
+void mainmenu()
+{
+	int userin;
+
+	cel::spacing();
+	cel::print("Р’С‹Р±РѕСЂ СЃС‚РёР»СЏ", color_blue);
+	cel::spacing();
+	cel::printbracket("1", "РҐР°РєРµСЂ", color_blue);
+	cel::printbracket("2", "РЎРѕР±Р°С‡РєР°", color_blue);
+	cel::spacing();
+	cel::printonline("РљРѕРЅСЃРѕР»СЊ : ", color_blue);
+	cin >> userin;
+	if (userin == 1)
+	{
+		g_Discord->SetupHacker();
+	}
+	else if (userin == 2)
+	{
+		g_Discord->SetupDog();
+	}
+	else
+	{
+		wronginput();
+	}
+}
+
+void initializing()
+{
+	ifstream readdata("RPCData.txt");
+	string appid;
+	int saveyn;
+	
+	
+	if (!FileIsExist("RPCData.txt"))
+	{
+		cel::spacing();
+		cel::print("Р’РІРµРґРёС‚Рµ AppId", color_blue);
+		cel::spacing();
+		cel::printonline("РљРѕРЅСЃРѕР»СЊ : ", color_blue);
+		cin >> appid;
+		cel::spacing();
+		cel::print("РЎРѕС…СЂР°РЅРёС‚СЊ AppId РґР»СЏ РїРѕСЃР»РµРґСѓРµС‰РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ?", color_blue);
+		cel::spacing();
+		cel::printbracket("1", "Р”Р°", color_blue);
+		cel::spacing();
+		cel::printbracket("2", "РќРµС‚", color_blue);
+		cel::spacing();
+		cel::printonline("РљРѕРЅСЃРѕР»СЊ : ", color_blue);
+
+		cin >> saveyn;
+
+		if (saveyn == 1)
+		{
+			ofstream datasystem;
+
+			datasystem.open("RPCData.txt");
+			datasystem << appid;
+			datasystem.close();
+
+
+			if (FileIsExist("RPCData.txt"))
+			{
+				cel::print("РЈСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅРѕ!", color_green);
+				mainmenu();
+			}
+			else if (!FileIsExist("RPCData.txt"))
+			{
+				cel::print("РћС€РёР±РєР° СЃРѕС…СЂР°РЅРµРЅРёСЏ!", color_green);
+				Sleep(1000);
+				system("exit");
+			}
+
+			
+
+		}
+		else if (saveyn == 2)
+		{
+			mainmenu();
+		}
+		else
+		{
+			wronginput();
+		}
+	}
+
+	else if (FileIsExist("RPCData.txt"))
+	{
+		readdata >> appid;
+		readdata.close();
+
+		cel::spacing();
+		cel::print(("РЈСЃРїРµС€РЅРѕ Р·Р°РіСЂСѓР¶РµРЅРѕ РёР· С„Р°Р№Р»Р°! " + appid), color_green);
+		// Р—Р°РіСЂСѓР·РєР° РёР· С„Р°Р№Р»Р°, РїРѕРєР° С‡С‚Рѕ РїСЂРѕСЃС‚Рѕ РїРµСЂРµРІРѕРґРёС‚ РЅР° mainmenu (РџРѕС„РёРєСЃРёР» СЃС‚СЂРѕС‡РєР°РјРё РІС‹С€Рµ :) )
+		mainmenu();
+	}
+
+
+	g_Discord->Initialize(appid);
+
+}
+
+void starting()
+{
+	int yesno;
+
+	cel::spacing();
+	cel::print("РџСЂРѕР№С‚Рё РѕР±СѓС‡РµРЅРёРµ?", color_blue);
+	cel::spacing();
+	cel::printbracket("1", "Р”Р°", color_green);
+	cel::printbracket("2", "РќРµС‚", color_green);
+	cel::spacing();
+	cel::printonline("РљРѕРЅСЃРѕР»СЊ : ", color_blue);
+	cin >> yesno;
+	if (yesno == 1)
+	{
+		system("start https://github.com/maj0roff/Discord-RPC/blob/master/README.md");
+	}
+	else if (yesno == 2)
+	{
+		initializing();
+	}
+	else
+	{
+		wronginput();
+	}
+	cel::spacing();
+
+}
 
 int main()
 {
-	// Locales
-	string publickey;
-
-	int start;
-	int uin;
-
 	setlocale(LC_ALL, "rus");
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	cel::print("         _nnnn_", color_green);
-	cel::print("        dGGGGMMb", color_green);
-	cel::print("       @p~qp~~qMb", color_green);
-	cel::print("       M|@||@) M|", color_green);
-	cel::print("       @,----.JM|", color_green);
-	cel::print("      JS^\__/  qKL", color_green);
-	cel::print("     dZP        qKRb", color_green);
-	cel::print("    dZP          qKKb", color_green);
-	cel::print("   fZP            SMMb", color_green);
-	cel::print("   HZM            MMMM", color_green);
-	cel::print("   FqM            MMMM", color_green);
-	cel::print("      Discord RPC", color_green);
-	cel::print("     Author : maj0r", color_green);
-	cel::spacing();
-	cel::printbracket("1", "Помощь", color_red);
-	cel::printbracket("2", "Использовать программу", color_red);
-	cel::printonline("Выбор : ", color_gray);
-	cin >> start;
-	if (start == 1)
-	{
-		system("start https://github.com/maj0roff/DiscordRPC/blob/main/README.md");
-	}
-	else if (start == 2)
-	{
-		cel::printonline("Public Key вашего приложения : ", color_green);
-		cin >> publickey;
-		cel::print("\n", color_white);
-
-		g_Discord->Initialize(publickey);
-
-		cel::printbracket("1", "Хакер", color_green);
-		cel::printbracket("2", "Собачка", color_green);
-		cel::printbracket("3", "Кошечка", color_green);
-		cel::printbracket("4", "C++", color_green);
-		cel::printbracket("5", "Чипсы", color_green);
-		cel::printbracket("6", "Ёж", color_green);
-		cel::printonline("Ваш выбор : ", color_gray);
-		cin >> uin;
-
-		if (uin == 1)
-		{
-			g_Discord->SetupHacker();
-			cel::print("Успешно активировано!", color_green);
-			cel::print("Не выходите из програмы для продолжения работы", color_gray);
-		}
-		else if (uin == 2)
-		{
-			g_Discord->SetupDog();
-			cel::print("Успешно активировано!", color_green);
-			cel::print("Не выходите из програмы для продолжения работы", color_gray);
-		}
-		else if (uin == 3)
-		{
-			g_Discord->SetupCat();
-			cel::print("Успешно активировано!", color_green);
-			cel::print("Не выходите из програмы для продолжения работы", color_gray);
-		}
-		else if (uin == 4)
-		{
-			g_Discord->SetupCPP();
-			cel::print("Успешно активировано!", color_green);
-			cel::print("Не выходите из програмы для продолжения работы", color_gray);
-		}
-		else if (uin == 5)
-		{
-			g_Discord->SetupChips();
-			cel::print("Успешно активировано!", color_green);
-			cel::print("Не выходите из програмы для продолжения работы", color_gray);
-		}
-		else if (uin == 6)
-		{
-			g_Discord->SetupEzhik();
-			cel::print("Успешно активировано!", color_green);
-			cel::print("Не выходите из програмы для продолжения работы", color_gray);
-		}
-		else
-		{
-			cel::print("Invalid input", color_red);
-			Sleep(1500);
-			system("exit");
-		}
-
-		system("pause");
-
-	}
-	else
-	{
-		cel::print("Invalid input", color_red);
-		Sleep(1500);
-		system("exit");
-	}
+	logo(color_blue);
 	
+	starting();
+
+
+	cel::print("Р”Р»СЏ РІС‹С…РѕРґР° РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ", color_red);
+	system("pause");
 }
